@@ -1,0 +1,1198 @@
+{
+  "name": "Lead Qualification System",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are a sales intelligence researcher.\n\nYou are given lead data submitted by a company through a form. Your task is to research the company using the available information and enrich the data with additional business intelligence.(If the company doesn't exist in real, that means we are testing data on a dummy company. so you should just response about that in a real way , even the given data is not real)\n\nInput Lead Data:\nName: {{ $json.name }}\nEmail: {{ $json.email }}\nPhone: {{ $json.phone }}\nCompany Name: {{ $json.firm_name }}\nWebsite: {{ $json.website }}\nIndustry: {{ $json.industry }}\nCompany Size: {{ $json.firm_size }}\nCountry: {{ $json.country }}\nAutomation Requirement: {{ $json.automation_request }}\n\nYour tasks:\n\n1. Research the company using the website and company name.\n2. Estimate the company's annual revenue (Give me a number)\n3. Identify the likely technology stack used on their website (for example: CMS, analytics tools, frameworks, marketing tools etc.).\n4. Find the official LinkedIn company profile link.\n5. Identify the likely decision maker (Founder, CEO, HR Head, Operations Head etc.).\n6. Give a short summary (2–3 sentences) about what the company does.\n7. Give me a Lead Score(on the scale of 0 - 100) according to research, the score should be based on the study of firm size, budget(in USD), automation request, , annual revenue, and other parameters.\n\nImportant rules:\n- If exact data is not available, provide the most reasonable estimate.\n- Use publicly available information only.\n- Do not hallucinate specific numbers if unsure; instead provide ranges or \"Unknown\".\n\nReturn the output ONLY in the following JSON format:\n\n{\n  \"company_name\": \"\",\n  \"website\": \"\",\n  \"industry\": \"\",\n  \"estimated_revenue_range\": \"\",\n  \"estimated_employee_range\": \"\",\n  \"linkedin_company_profile\": \"\",\n  \"likely_decision_maker_role\": \"\",\n  \"tech_stack\": [],\n  \"company_summary\": \"\",\n  \"lead_score\" : \n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        -1072
+      ],
+      "id": "b7a71194-c5ac-42c6-b8a4-d58849db0af7",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "uJnErPtwC8K1E592",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI",
+          "mode": "list",
+          "cachedResultName": "Tell about yourself ? ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Revenue Estimation": "={{ $json.estimated_revenue_range }}",
+            "LinkedIn Profile": "={{ $json.linkedin_company_profile }}",
+            "Lead Info": "={{ $json.company_summary }}",
+            "Firm Name ": "={{ $json.company_name }}",
+            "Lead Score": "={{ $json.lead_score }}"
+          },
+          "matchingColumns": [
+            "Firm Name "
+          ],
+          "schema": [
+            {
+              "id": "Submission ID",
+              "displayName": "Submission ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Respondent ID",
+              "displayName": "Respondent ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Submitted at",
+              "displayName": "Submitted at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone No.",
+              "displayName": "Phone No.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Firm Name ",
+              "displayName": "Firm Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Website",
+              "displayName": "Website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Firm Size",
+              "displayName": "Firm Size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Country",
+              "displayName": "Country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "How can we help you ?? ",
+              "displayName": "How can we help you ?? ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lead Info",
+              "displayName": "Lead Info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LinkedIn Profile",
+              "displayName": "LinkedIn Profile",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Revenue Estimation",
+              "displayName": "Revenue Estimation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lead Score",
+              "displayName": "Lead Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1024,
+        -1072
+      ],
+      "id": "e6d076b6-1b3c-4089-b4e5-2850e89a3093",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rQxUkGqY1ny6Uhzo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json[\"Lead Score\"] }}",
+                    "rightValue": 80,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    },
+                    "id": "871dda9d-5be7-49c1-bb5a-d2f411115c16"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "b188b2dc-11a0-420a-9261-658faeb8ee18",
+                    "leftValue": "={{ $json[\"Lead Score\"] }}",
+                    "rightValue": 50,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "bc22042e-0480-4f54-8f7b-710c2a1c350f",
+                    "leftValue": "={{ $json[\"Lead Score\"] }}",
+                    "rightValue": 49,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1248,
+        -1088
+      ],
+      "id": "400aa912-7a21-47e3-bd7b-18d9aafa5972",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "acf1eadc-e28d-4aa4-972e-a29d4505b721",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1680,
+        -1504
+      ],
+      "id": "38ba0847-8962-4e58-b894-457774cb8f64",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2192,
+        -1936
+      ],
+      "id": "26322f81-b487-4311-841c-29ac9c13418d",
+      "name": "Wait",
+      "webhookId": "0256d3a8-0915-4699-a179-805171d45f79"
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $input.first().json;\n\nreturn [\n{\njson: {\nname: lead[\"Name\"],\nemail: lead[\"Email\"],\nphone: lead[\"Phone No.\"],\nfirm_name: lead[\"Firm Name \"],\nwebsite: lead[\"Website\"],\nindustry: lead[\"Industry\"],\nfirm_size: lead[\"Firm Size\"],\nbudget: lead[\"Budget\"],\ncountry: lead[\"Country\"],\nautomation_request: lead[\"How can we help you ?? \"]\n}\n}\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        -1072
+      ],
+      "id": "97a7e003-5b06-4011-97c3-9dc9a6f1a2fa",
+      "name": "Parse JSON"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.output[0].content[0].text;\n\nconst parsed = JSON.parse(raw);\n\nreturn [\n{\njson: parsed\n}\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        -1072
+      ],
+      "id": "8f2e0c20-393b-4465-976a-ea99de0f070b",
+      "name": "Parse JSON 1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f56d6b4b-c3de-4aa5-a065-7006edcbc1d8",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2256,
+        -1248
+      ],
+      "id": "ce5a1275-e558-44fd-bc7a-e524a9eb9caa",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0AKA9AEE8L",
+          "mode": "list",
+          "cachedResultName": "hot-leads-info"
+        },
+        "text": "=Hey Guys, \nA hot lead just arrived, \n\n{{ $('Parse JSON').item.json.name }} from {{ $('Parse JSON').item.json.firm_name }} has come up with a request.\n{{ $('Parse JSON').item.json.automation_request }}\n\nTheir firm has {{ $('Parse JSON').item.json.firm_size }} humanpower. their current budget is ${{ $('Parse JSON').item.json.budget }}. \n{{ $json['Lead Info'] }} and their revenue is \n{{ $('Parse JSON 1').item.json.estimated_revenue_range }}\n\nYou can get more info about them at, \nLinkedIn : {{ $json['LinkedIn Profile'] }}\nWebsite : {{ $('Parse JSON 1').item.json.website }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        1408,
+        -1296
+      ],
+      "id": "04523963-337c-44e1-870b-808519fdec4c",
+      "name": "MSG to team on Slack",
+      "webhookId": "ee3c3853-33d7-46cb-a213-5b3b77f22fb9",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "bUxznXBl3cV6APKX",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Parse JSON').item.json.email }}",
+        "subject": "Mail from Edge AI regarding Automation Creation.",
+        "message": "=Hi {{ $('Parse JSON').item.json.name }},\n\nThank you for reaching out and sharing details about your requirement.\n\nI reviewed the information about {{ $('Parse JSON').item.json.automation_request }} at {{ $('Parse JSON').item.json.firm_name }}, and it looks like there could be a good opportunity to streamline parts of your workflow using AI automation.\n\nBefore scheduling a quick discussion, I just wanted to confirm if you would be interested in exploring a possible solution for this. If it sounds relevant to you, I’d be happy to set up a short 10–15 minute call to understand your current process and discuss how automation might help.\n\nPlease let me know if you'd like to proceed, and I’ll share the meeting details accordingly.\n\nLooking forward to your response.\n\nBest regards,\nSamar\nEdge AI",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        -1504
+      ],
+      "id": "0536dfa4-42e8-40fc-92fd-0f7f28378048",
+      "name": "Meet Approval 1",
+      "webhookId": "09185a62-5835-414f-892c-306544f29b9f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ns9NkMlKcZqps1dM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "noahxsamar.writes@gmail.com",
+          "mode": "list",
+          "cachedResultName": "noahxsamar.writes@gmail.com"
+        },
+        "end": "={{ $now.plus(15, 'minutes') }}",
+        "additionalFields": {
+          "conferenceDataUi": {
+            "conferenceDataValues": {
+              "conferenceSolution": "hangoutsMeet"
+            }
+          },
+          "description": "=Automation Discussion – {{ $('Parse JSON').item.json.firm_name }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1968,
+        -1744
+      ],
+      "id": "a4420d41-3c5e-4570-bce8-e1b73ec4343f",
+      "name": "Create Meet",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cS36Lo1rsTePPEAP",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Parse JSON').item.json.email }}",
+        "subject": "=Automation Discussion - {{ $('Parse JSON').item.json.firm_name }} X Edge AI",
+        "emailType": "text",
+        "message": "=Hi {{ $('Parse JSON').item.json.name }},  \n\nThank you for confirming your interest.  I’ve scheduled a short 15-minute discussion to understand your current workflow and discuss possible automation solutions.  \n\nYou can join the meeting using the link below: {{ $json.hangoutLink }}  \n\nLooking forward to speaking with you.  Regards, \nSamar",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1968,
+        -1936
+      ],
+      "id": "3b9bc9b4-ca4d-47ce-8215-041e813a0f92",
+      "name": "Send Meet Link",
+      "webhookId": "5a94222f-d990-4eaa-847c-e6a035d4fe92",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ns9NkMlKcZqps1dM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "AI Automation Proposal"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2208,
+        -1744
+      ],
+      "id": "3530d29c-b4b2-44cc-a4d5-4bdec1ce6597",
+      "name": "Create Proposal",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "pCP3QKc1v55FcXRt",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "=Client Name: {{ $('Parse JSON').item.json.name }}\n\nCompany: {{ $('Parse JSON').item.json.firm_name }}\n\nIndustry: {{ $('Parse JSON').item.json.industry }}\n\nRequirement: {{ $('Parse JSON').item.json.automation_request }}\n\nProposed Solution: An AI Automation Workflow that uses n8n, VAPI, Airtable etc to differentiate and track eligible candidates and send them to HR for final interview. saving a lot of time of employees in screening round and all.  \n\nEstimated Timeline: 5-7 Days \n\nEstimated Cost: $450 ~ $500 (excluding AI expenses)"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2448,
+        -1744
+      ],
+      "id": "719a189f-f854-47b4-8b07-c2bc46244613",
+      "name": "Document the proposal",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "pCP3QKc1v55FcXRt",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2448,
+        -1936
+      ],
+      "id": "f7222469-7b6a-4cb2-96a5-0f14fbd67fdc",
+      "name": "Download Proposal",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YmO5DxSKKx8rMl1A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Parse JSON').item.json.email }}",
+        "subject": "=Automation Proposal for {{ $('Parse JSON').item.json.firm_name }}",
+        "emailType": "text",
+        "message": "=Hi {{ $('Parse JSON').item.json.name }},   \n\nThank you for discussing your automation requirement.  I've prepared a short proposal outlining the suggested solution and implementation plan.  Please find the proposal attached.  Looking forward to your thoughts.  \n\nBest, \nSamar",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2752,
+        -1936
+      ],
+      "id": "7ac13c19-25e2-4ade-8c8e-4d898835ed1e",
+      "name": "Send proposal",
+      "webhookId": "c79bec29-5ad4-4257-9dd8-abe2725ecb21",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ns9NkMlKcZqps1dM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Data Collection').item.json.Email }}",
+        "subject": "Just checking if you'd still like to discuss your automation request",
+        "message": "=Hi {{ $('Parse JSON').item.json.name }},  \n\nI hope you're doing well.  A few days ago, I reached out regarding the automation request submitted for {{ $('Parse JSON').item.json.firm_name }}. \n\nI just wanted to quickly check if you're still interested in exploring a possible solution for your request.  If automating  is still something you're considering, I’d be happy to schedule a short 10–15 minute discussion to understand your current workflow and see if we can help.  If now isn’t the right time, no worries at all — just let me know and I won’t trouble you with further follow-ups.  Looking forward to hearing from you.  \n\nBest regards, \nSamar ",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2048,
+        -1248
+      ],
+      "id": "07865830-1cac-4897-b02b-fb9f50606f75",
+      "name": "Send Confirmation Mail",
+      "webhookId": "c92b6a04-ead6-48f7-b44c-b75dae68f288",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ns9NkMlKcZqps1dM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI",
+          "mode": "list",
+          "cachedResultName": "Tell about yourself ? ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2528,
+        -1232
+      ],
+      "id": "4b24e9f5-b909-4be6-bb02-dce868c94a69",
+      "name": "Delete Record from Database",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rQxUkGqY1ny6Uhzo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Data Collection').item.json.Email }}",
+        "subject": "=Small Automation Idea for {{ $('Data Collection').item.json['Firm Name '] }}",
+        "message": "=Hi {{ $('Data Collection').item.json.Name }},\n\nI hope you are doing well.\n\nI noticed that {{ $('Data Collection').item.json['Firm Name '] }} operates in the {{ $('Data Collection').item.json.Industry }} sector. Many organizations in this space are beginning to automate parts of their workflow, particularly processes such as {{ $('Parse JSON').item.json.automation_request }}, to reduce manual effort and improve operational efficiency.\n\nGiven your requirements, there may be an opportunity to implement a similar automation approach that could help streamline certain processes within your team.\n\nIf this is something you would be open to exploring, I would be happy to share a brief example of how such a solution could work for your organization.\n\nPlease feel free to let me know if this would be of interest.\n\nBest regards,\nSamar",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1888,
+        -944
+      ],
+      "id": "04bc8385-475b-45f1-a89a-3918f2783f43",
+      "name": "Send message and wait for response",
+      "webhookId": "ce62611f-3641-4134-968b-647eaafcdc09",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ns9NkMlKcZqps1dM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2128,
+        -944
+      ],
+      "id": "fbf6738d-f9fe-4e61-a30e-7db5393d96c1",
+      "name": "Wait1",
+      "webhookId": "884f297a-8ea3-4dd1-9324-ca5485ff8563"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "45b963e2-6a79-4a5a-8afe-6ed0478b9288",
+              "leftValue": "={{ $('Send message and wait for response').item.json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2336,
+        -944
+      ],
+      "id": "4f33f566-6204-4ff9-8eee-d63837ea9066",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "content": "# Meet Approval and Proposal Generation",
+        "height": 1248,
+        "width": 1632,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1360,
+        -2016
+      ],
+      "typeVersion": 1,
+      "id": "421159c1-b2c0-4e68-b902-852d3bd83fe3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Data Collection and Parsing",
+        "height": 416,
+        "width": 1392
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        -1184
+      ],
+      "typeVersion": 1,
+      "id": "11a012f5-cc29-4014-85fc-81616fe36954",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Cold Lead Procedure",
+        "height": 272,
+        "width": 544,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2448,
+        -1328
+      ],
+      "typeVersion": 1,
+      "id": "9b318188-2950-426f-be75-cf33d0853669",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Mid Lead Procedure",
+        "height": 288,
+        "width": 1168,
+        "color": "#4F1212"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1824,
+        -1056
+      ],
+      "typeVersion": 1,
+      "id": "d7c1ec0b-8389-415a-bb75-546ff1070560",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI",
+          "mode": "list",
+          "cachedResultName": "Tell about yourself ? ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1poDQ2dnQq7nGePmqlbiFNwBsxx59liw8-o0p2fl9TYI/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -1072
+      ],
+      "id": "e4bf5015-5ac1-47b4-aab1-aec167587191",
+      "name": "Data Collection",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "zcX0pVp0JkVFfwR9",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# LEAD QUALIFICATION SYSTEM\n\n## Collects incoming lead data from forms or external sources.\n\n## Parses and structures the data for analysis.\n\n## Uses AI to understand the lead’s requirements and qualification level.\n\n## Automatically categorizes leads into High, Mid, or Cold segments.\n\n## High-quality leads trigger meeting scheduling and proposal generation.\n\n## Mid-level leads enter a follow-up and nurturing workflow.\n\n## Cold leads are filtered out to keep the pipeline clean.\n\n## Sends notifications to the team and updates records in the database automatically.\n\n## Reduces manual work and ensures faster response to valuable leads.",
+        "height": 704,
+        "width": 1296
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -2016
+      ],
+      "typeVersion": 1,
+      "id": "424516ea-2cd5-4596-a224-46c5c1dc9da5",
+      "name": "Sticky Note4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "MSG to team on Slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete Record from Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create Meet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Confirmation Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Create Proposal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON 1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Create Meet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete Record from Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG to team on Slack": {
+      "main": [
+        [
+          {
+            "node": "Meet Approval 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meet Approval 1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Meet": {
+      "main": [
+        [
+          {
+            "node": "Send Meet Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Meet Link": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Proposal": {
+      "main": [
+        [
+          {
+            "node": "Document the proposal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Document the proposal": {
+      "main": [
+        [
+          {
+            "node": "Download Proposal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Proposal": {
+      "main": [
+        [
+          {
+            "node": "Send proposal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation Mail": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "MSG to team on Slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete Record from Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send proposal": {
+      "main": [
+        []
+      ]
+    },
+    "Data Collection": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "80a2229e-5522-4a18-abdf-4a5fca294b15",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c102eb5568c50c50f568734ca353a091b8fbb32d346a063d65156f9624dc46ae"
+  },
+  "id": "avvWo2bEmaIn5vXP",
+  "tags": []
+}
